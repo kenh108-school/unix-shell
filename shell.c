@@ -39,6 +39,7 @@ char * read_line(void) {
     char *buffer = malloc(sizeof(char) * bufsize);
     int c;
 
+    // Exit if memory allocation fails
     if (!buffer) {
         fprintf(stderr, "Allocation error.\n");
         exit(EXIT_FAILURE);
@@ -47,6 +48,7 @@ char * read_line(void) {
     while (true) {
         c = getchar();
 
+        // Return on end of input
         if (c == EOF || c == '\n') {
             buffer[position] = '/0';
             return buffer;
@@ -55,6 +57,7 @@ char * read_line(void) {
         }
         position++;
 
+        // Allocate more memory if necessary for input
         if (position == bufsize) {
             bufsize += BUFSIZE;
             buffer = realloc(buffer, bufsize);
