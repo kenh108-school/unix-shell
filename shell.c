@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
 #define BUFSIZE 1024
 
@@ -19,13 +21,14 @@ void command_loop(void) {
     
     char *line;
     char **args;
-    int status;
+    int status = 1;
     
     do {
         printf("$ ");
         line = read_line();
-        args = split_line();
-        status = execute_command();
+        /* args = split_line();
+        status = execute_command(); */
+        printf("%s\n", line);
 
         free(line);
         free(args);
@@ -37,6 +40,7 @@ char * read_line(void) {
     int bufsize = BUFSIZE;
     int position = 0;
     char *buffer = malloc(sizeof(char) * bufsize);
+    // Int instead of char for EOF check
     int c;
 
     // Exit if memory allocation fails
@@ -50,7 +54,7 @@ char * read_line(void) {
 
         // Return on end of input
         if (c == EOF || c == '\n') {
-            buffer[position] = '/0';
+            buffer[position] = '\0';
             return buffer;
         } else {
             buffer[position] = c;
