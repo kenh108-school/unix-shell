@@ -10,6 +10,7 @@ int execute_command(char **);
 int main(int argc, char **argv) {
 
     // Loop for commands
+    command_loop();
 
     return EXIT_SUCCESS;
 }
