@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#define BUFSIZE 1024
+
 void command_loop(void);
 char * read_line(void);
 char ** split_line(char *);
@@ -27,4 +29,39 @@ void command_loop(void) {
         free(line);
         free(args);
     } while (status);
+}
+
+char * read_line(void) {
+
+    int bufsize = BUFSIZE;
+    int position = 0;
+    char *buffer = malloc(sizeof(char) * bufsize);
+    int c;
+
+    if (!buffer) {
+        fprintf(stderr, "Allocation error.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    while (true) {
+        c = getchar();
+
+        if (c == EOF || c == '\n') {
+            buffer[position] = '/0';
+            return buffer;
+        } else {
+            buffer[position] = c;
+        }
+        position++;
+
+        if (position == bufsize) {
+            bufsize += BUFSIZE;
+            buffer = realloc(buffer, bufsize);
+
+            if (!buffer) {
+                fprintf(stderr, "Allocation error.\n");
+                exit(EXIT_FAILURE);
+            }
+        }
+    }
 }
