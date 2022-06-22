@@ -1,3 +1,4 @@
 *.o
+main
 unix_shell
 .vscode
