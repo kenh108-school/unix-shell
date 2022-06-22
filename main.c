@@ -10,14 +10,14 @@ char **parse_input(char *);
 int main(int argc, char **argv) {
     char *input;
     char **parsed_input;
+    char *test = "hello";
 
     while (true) {
         print_prompt();
         input = read_input();
         parsed_input = parse_input(input);
-
+        
         free(input);
-        free(parsed_input);
     }
 }
 
@@ -42,13 +42,15 @@ char *read_input(void) {
 }
 
 char **parse_input(char *input) {
-    char
+    char **tokens = malloc(sizeof(char *));
     char *token = strtok(input, " ");
+    int position = 0;
 
     while (token != NULL) {
-        printf("%s\n", token);
+        tokens[position++] = token;
+        tokens = realloc(tokens, (position + 1) * sizeof(char *));
         token = strtok(NULL, " ");
     }
 
-    return NULL;
+    return tokens;
 }
