@@ -1,17 +1,16 @@
 CC = gcc
 CFLAGS = -g -Wall
+DEPS = command.h input.h
+OBJ = main.o input.o command.o
 TARGET = unix_shell
 
 all: $(TARGET)
 
-$(TARGET): main.o input.o
-	$(CC) main.o input.o -o $(TARGET)
+$(TARGET): $(OBJ)
+	$(CC) -o $@ $^
 
-main.o: main.c
-	$(CC) $(CFLAGS) -c main.c
-
-input.o: input.c input.h
-	$(CC) $(CFLAGS) -c input.c
+%.o: %.c $(DEPS)
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
 	$(RM) *.o $(TARGET)
