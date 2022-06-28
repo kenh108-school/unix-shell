@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 #include "input.h"
 
 void print_prompt(void) {
@@ -17,8 +18,11 @@ char *read_input(void) {
     // If there is error with getline
     if (chars == -1)
     {
-        fprintf(stdin, "getline() error.\n");
-        exit(EXIT_FAILURE);
+        if (errno == EINTR) return NULL;
+        else {
+            fprintf(stdout, "getline() error.\n");
+            exit(EXIT_FAILURE);
+        }
     }
 
     // Remove newline char
